@@ -1,11 +1,14 @@
 /** @type {import('next').NextConfig} */
+
+const isProd = process.env.NODE_ENV === "production";
+const basePath = isProd ? "/AI-3D-Test" : "";
+
 const nextConfig = {
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.(glb|gltf)$/,
-      use: { loader: 'file-loader', options: { publicPath: '/_next/static/files/', outputPath: 'static/files/', name: '[name].[hash].[ext]' } },
-    });
-    return config;
+  output: "export",
+  basePath,
+  images: { unoptimized: true },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
   },
 };
 

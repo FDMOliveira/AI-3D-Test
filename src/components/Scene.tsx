@@ -237,7 +237,7 @@ function Sandbank() {
 // ── House component ──────────────────────────────────────────────────────────
 
 function House() {
-  const { scene } = useGLTF("/house3.glb");
+  const { scene } = useGLTF(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/house3.glb`);
 
   useMemo(() => {
     scene.traverse((child) => {
