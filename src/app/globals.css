@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-inter: "Inter", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis requires native scroll-behavior to be non-smooth */
+}
+
+/* Lenis resets — prevent height/scroll conflicts when Lenis takes over */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background: #060d1a;
+  color: #f0f9ff;
+  font-family: var(--font-inter);
+  overflow-x: hidden;
+}
+
+/* Hide scrollbar but keep scroll functionality */
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Canvas container */
+.canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
