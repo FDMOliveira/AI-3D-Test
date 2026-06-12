@@ -68,39 +68,73 @@ export default function HeroContent() {
       blockRefs.current.forEach((block, i) => {
         if (!block) return;
 
-        const els = [
-          block.querySelector(".t-label"),
-          block.querySelector(".t-heading"),
-          block.querySelector(".t-sub"),
-          block.querySelector(".t-cta"),
-        ].filter(Boolean);
+        const els = (i === BLOCKS.length - 1
+          ? [
+              block.querySelector(".t-label"),
+              block.querySelector(".t-heading"),
+              block.querySelector(".t-sub"),
+              block.querySelector(".t-cta-1"),
+              block.querySelector(".t-cta-2"),
+            ]
+          : [
+              block.querySelector(".t-label"),
+              block.querySelector(".t-heading"),
+              block.querySelector(".t-sub"),
+            ]
+        ).filter(Boolean);
 
         const [fi0, fi1, fo0, fo1] = TIMING[i];
 
         // Fade in
-        gsap.fromTo(
-          els,
-          { opacity: 0, y: 28, filter: "blur(10px)" },
-          {
-            opacity: 1,
-            y: 0,
-            filter: "blur(0px)",
-            stagger: 0.1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: container,
-              start: `${fi0}% top`,
-              end:   `${fi1}% top`,
-              scrub: 1,
+        if (i === BLOCKS.length - 1) {
+          // Last block: time-based with 1 s delay, triggered once on enter
+          gsap.set(els, { opacity: 0, y: 38, filter: "blur(10px)" });
+          ScrollTrigger.create({
+            trigger: container,
+            start: `${fi0}% top`,
+            onEnter: () => {
+              gsap.to(els, {
+                opacity: 1, y: 0, filter: "blur(0px)",
+                stagger: 0.1, duration: 0.8, delay: 1, ease: "power2.out",
+                onComplete: () => {
+                  block.querySelectorAll<HTMLElement>(".t-cta-1, .t-cta-2").forEach((btn) => {
+                    btn.style.transition = "background-color 150ms, transform 150ms";
+                  });
+                },
+              });
             },
-          }
-        );
+            onLeaveBack: () => {
+              block.querySelectorAll<HTMLElement>(".t-cta-1, .t-cta-2").forEach((btn) => {
+                btn.style.transition = "none";
+              });
+              gsap.set(els, { opacity: 0, y: 38, filter: "blur(10px)" });
+            },
+          });
+        } else {
+          gsap.fromTo(
+            els,
+            { opacity: 0, y: 38, filter: "blur(10px)" },
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              stagger: 0.1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: container,
+                start: `${fi0}% top`,
+                end:   `${fi1}% top`,
+                scrub: 1,
+              },
+            }
+          );
+        }
 
         // Fade out (skip for last block)
         if (fo0 >= 0) {
           gsap.to(els, {
             opacity: 0,
-            y: -20,
+            y: -30,
             filter: "blur(8px)",
             stagger: 0.05,
             ease: "none",
@@ -166,24 +200,24 @@ export default function HeroContent() {
               block.align === "center" ? "left-1/2 -translate-x-1/2 text-center" : "",
             ].join(" ")}
           >
-            <span className="t-label block text-white/40 text-xs tracking-[0.35em] uppercase mb-4">
+            <span className="t-label block text-white/40 text-xs tracking-[0.35em] uppercase mb-4" style={{ opacity: 0 }}>
               {block.label}
             </span>
             <h2
               className="t-heading text-white text-4xl md:text-6xl font-light leading-[1.05] tracking-tight mb-6"
-              style={{ whiteSpace: "pre-line" }}
+              style={{ whiteSpace: "pre-line", opacity: 0 }}
             >
               {block.heading}
             </h2>
-            <p className="t-sub text-white/50 text-base md:text-lg font-light leading-relaxed">
+            <p className="t-sub text-white/50 text-base md:text-lg font-light leading-relaxed" style={{ opacity: 0 }}>
               {block.sub}
             </p>
             {block.cta && (
-              <div className="t-cta mt-10 flex flex-col sm:flex-row gap-4 justify-center pointer-events-auto">
-                <button className="text-sm bg-white text-[#060d1a] px-8 py-3.5 rounded-full font-medium tracking-wide hover:bg-white/90 transition-all hover:scale-[1.03] active:scale-100">
+              <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center pointer-events-auto">
+                <button className="t-cta-1 text-sm bg-white text-[#060d1a] px-8 py-3.5 rounded-full font-medium tracking-wide hover:bg-white/90 hover:scale-[1.03] active:scale-100" style={{ opacity: 0 }}>
                   Reserve Your Isle
                 </button>
-                <button className="text-sm text-white/70 border border-white/20 px-8 py-3.5 rounded-full font-light tracking-wide hover:bg-white/10 transition-all">
+                <button className="t-cta-2 text-sm text-white/70 border border-white/20 px-8 py-3.5 rounded-full font-light tracking-wide hover:bg-white/10" style={{ opacity: 0 }}>
                   Learn More
                 </button>
               </div>
