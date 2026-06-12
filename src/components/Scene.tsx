@@ -240,11 +240,33 @@ function House() {
   const { scene } = useGLTF(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/house3.glb`);
 
   useMemo(() => {
+    const TEX_KEYS = [
+      "map", "normalMap", "roughnessMap", "metalnessMap",
+      "emissiveMap", "aoMap", "lightMap", "alphaMap",
+      "bumpMap", "displacementMap", "clearcoatMap",
+      "clearcoatNormalMap", "clearcoatRoughnessMap",
+      "sheenColorMap", "sheenRoughnessMap", "transmissionMap",
+      "thicknessMap", "specularIntensityMap", "specularColorMap",
+    ] as const;
+
     scene.traverse((child) => {
-      if (child instanceof THREE.Mesh) {
-        child.castShadow = true;
-        child.receiveShadow = true;
-      }
+      if (!(child instanceof THREE.Mesh)) return;
+      child.castShadow = true;
+      child.receiveShadow = true;
+
+      // GLB exports sometimes assign textures to high UV channels (uv7, etc.)
+      // that don't exist in the geometry, causing shader compile errors.
+      // Reset all texture channels to 0 (the standard "uv" attribute).
+      const mats = Array.isArray(child.material) ? child.material : [child.material];
+      mats.forEach((mat) => {
+        TEX_KEYS.forEach((key) => {
+          const tex = (mat as THREE.MeshPhysicalMaterial)[key as keyof THREE.MeshPhysicalMaterial];
+          if (tex && (tex as THREE.Texture).isTexture) {
+            (tex as THREE.Texture).channel = 0;
+          }
+        });
+        (mat as THREE.Material).needsUpdate = true;
+      });
     });
   }, [scene]);
 
