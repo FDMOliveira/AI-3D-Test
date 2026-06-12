@@ -2,11 +2,14 @@
   "name": "the-isle",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://fdmoliveira.github.io/AI-3D-Test/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d out"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
@@ -27,6 +30,7 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.5.19",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.16",
     "typescript": "^5.7.2"
