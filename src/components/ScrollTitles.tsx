@@ -41,7 +41,7 @@ export default function ScrollTitles() {
           className={`${headingClass} ${primaryVisible ? VISIBLE : HIDDEN}`}
           style={{ textShadow }}
         >
-          The Sandbank Pavilion
+          The Sandbank Pavilion asdadas
         </h2>
         <p
           className={`${subClass} ${primaryVisible ? VISIBLE : HIDDEN}`}

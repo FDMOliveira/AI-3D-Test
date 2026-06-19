@@ -34,7 +34,7 @@ export const CAMERA_STATES = [
     target: new THREE.Vector3(0, 1.5, 0),
   },
   {
-    pos: new THREE.Vector3(0, 1.5, 0),
+    pos: new THREE.Vector3(0, 1.5, -0.1),
     target: new THREE.Vector3(0, 1.5, -5),
   },
 ] as const;

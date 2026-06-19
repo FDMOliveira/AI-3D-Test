@@ -1,0 +1,279 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "siteTitle",
+        "type": "string"
+      },
+      {
+        "rows": 2,
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "siteDescription",
+        "type": "text"
+      },
+      {
+        "description": "Falls back to Site Title if left empty.",
+        "name": "openGraphTitle",
+        "type": "string"
+      },
+      {
+        "rows": 2,
+        "description": "Falls back to Site Description if left empty.",
+        "name": "openGraphDescription",
+        "type": "text"
+      }
+    ],
+    "name": "siteSettings",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "brandName",
+        "type": "string"
+      },
+      {
+        "description": "Displayed in the top navigation bar (desktop only).",
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "level": "error",
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ]
+                  }
+                ],
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "name": "href",
+                "type": "string",
+                "title": "URL"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "navLinks",
+        "type": "array"
+      },
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "description": "The \"Book Now\" button in the top-right corner.",
+        "name": "ctaLabel",
+        "type": "string",
+        "title": "CTA Button Label"
+      }
+    ],
+    "name": "navigation",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "initialValue": "Scroll",
+        "description": "The small label shown at the bottom of the first screen (default: \"Scroll\").",
+        "name": "scrollIndicatorLabel",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 4
+              },
+              {
+                "flag": "max",
+                "constraint": 4
+              }
+            ]
+          }
+        ],
+        "description": "The 4 narrative text panels that appear as the user scrolls through the scene. Keep exactly 4 blocks — their timing is fixed to the 3D camera animation.",
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "level": "error",
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ]
+                  }
+                ],
+                "description": "Small uppercase label above the heading (e.g. \"The Isle\", \"Discover\").",
+                "name": "label",
+                "type": "string",
+                "title": "Section Label"
+              },
+              {
+                "rows": 3,
+                "validation": [
+                  {
+                    "level": "error",
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ]
+                  }
+                ],
+                "description": "Main heading text. Press Enter to create line breaks that control how the text wraps.",
+                "name": "heading",
+                "type": "text"
+              },
+              {
+                "validation": [
+                  {
+                    "level": "error",
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ]
+                  }
+                ],
+                "description": "Short supporting sentence below the heading.",
+                "name": "sub",
+                "type": "string",
+                "title": "Subtext"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Left",
+                      "value": "left"
+                    },
+                    {
+                      "title": "Center",
+                      "value": "center"
+                    },
+                    {
+                      "title": "Right",
+                      "value": "right"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "center",
+                "validation": [
+                  {
+                    "level": "error",
+                    "rules": [
+                      {
+                        "flag": "valid",
+                        "constraint": [
+                          "left",
+                          "center",
+                          "right"
+                        ]
+                      },
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ]
+                  }
+                ],
+                "description": "Controls where the text block is positioned on screen.",
+                "name": "align",
+                "type": "string",
+                "title": "Text Alignment"
+              },
+              {
+                "initialValue": false,
+                "description": "Enable for the final block to show the \"Reserve\" and \"Learn More\" buttons.",
+                "name": "cta",
+                "type": "boolean",
+                "title": "Show CTA Buttons"
+              },
+              {
+                "description": "The filled button (e.g. \"Reserve Your Isle\"). Only shown when CTA Buttons is enabled.",
+                "hidden": "conditional",
+                "name": "ctaPrimaryLabel",
+                "type": "string",
+                "title": "Primary CTA Button Label"
+              },
+              {
+                "description": "The outlined button (e.g. \"Learn More\"). Only shown when CTA Buttons is enabled.",
+                "hidden": "conditional",
+                "name": "ctaSecondaryLabel",
+                "type": "string",
+                "title": "Secondary CTA Button Label"
+              }
+            ],
+            "type": "object",
+            "name": "scrollBlock"
+          }
+        ],
+        "name": "scrollBlocks",
+        "type": "array"
+      }
+    ],
+    "name": "homePage",
+    "type": "document"
+  }
+]
