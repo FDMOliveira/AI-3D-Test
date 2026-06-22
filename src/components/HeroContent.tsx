@@ -173,7 +173,7 @@ export default function HeroContent({
               scrub: 1,
             },
           });
-          const HEADING_LINE_STAGGER = 0.35;
+          const HEADING_LINE_STAGGER = 0.4;
           const headingLineCount = 3;
           const headingDuration = ((1 + 1) / els.length) * 2;
           const headingEnd =
@@ -189,7 +189,8 @@ export default function HeroContent({
             // Animate those lines with a slight stagger instead of the
             // single element, same fade/blur treatment otherwise.
             if (isFirstHeading) {
-              const lines = block.querySelectorAll<HTMLElement>(".t-heading-line");
+              const lines =
+                block.querySelectorAll<HTMLElement>(".t-heading-line");
               fadeInTl.fromTo(
                 lines,
                 { opacity: 0, y: 38, filter: "blur(10px)" },
@@ -360,7 +361,9 @@ export default function HeroContent({
             </span>
             <h2
               className="t-heading text-white text-4xl md:text-6xl font-light leading-[1.05] tracking-tight mb-6"
-              style={i === 0 ? undefined : { whiteSpace: "pre-line", opacity: 0 }}
+              style={
+                i === 0 ? undefined : { whiteSpace: "pre-line", opacity: 0 }
+              }
             >
               {i === 0
                 ? block.heading.split("\n").map((line, lineIdx) => (
